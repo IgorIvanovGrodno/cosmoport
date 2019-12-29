@@ -17,14 +17,15 @@ import org.springframework.web.servlet.view.JstlView;
 
 import java.util.List;
 
-@Configuration
-@EnableWebMvc
-@ComponentScan("com.space.controller")
+@Configuration //это конфигурационный файл
+@EnableWebMvc // разрешает mvc
+@ComponentScan("com.space.controller") // указываем где сканировать для поиска компонентов
 public class WebConfig implements WebMvcConfigurer {
 
 
     @Bean
     public ViewResolver internalResourceViewResolver() {
+        //арбитр представлений
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setViewClass(JstlView.class);
         bean.setPrefix("/WEB-INF/");
@@ -39,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //указываем где лежат CSS, JS, img файлы
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 

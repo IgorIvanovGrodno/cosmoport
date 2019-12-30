@@ -27,6 +27,7 @@ public class AppConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
+        //указывает где есть компоненты предметной области для работы hibernate
         em.setPackagesToScan("com.space.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -38,6 +39,7 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
+        //возвращает JDBC источник данных
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/cosmoport?serverTimezone=UTC");
@@ -47,7 +49,9 @@ public class AppConfig {
     }
 
     @Bean
+    //менеджер транзакций
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
 
@@ -59,6 +63,10 @@ public class AppConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
+    //устанавливает свойства для hibernate свойство additionalProperties позволяет
+    // определить мелкие детали поведения Hibernate. В данном случае фреймворку Hibernate сообщается,
+    // что он будет взаимодействовать с базой данных MySQL и для создания SQL-запросов должен использовать
+    // диалект MySQL5Dialect.
     private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");

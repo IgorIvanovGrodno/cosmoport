@@ -3,7 +3,6 @@ package com.space.model;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 @Entity
 @Table(name = "ship")
@@ -11,7 +10,7 @@ public class Ship {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
@@ -21,6 +20,7 @@ public class Ship {
     private String planet;
 
     @Column(name = "shipType")
+    @Enumerated(EnumType.STRING)
     private ShipType shipType;
 
     @Column(name = "prodDate")
@@ -42,12 +42,16 @@ public class Ship {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        if(name!=null&&name.length()!=0&&name.length()<=50) this.name = name;
+        this.name = name;
     }
 
     public String getPlanet() {
@@ -55,8 +59,7 @@ public class Ship {
     }
 
     public void setPlanet(String planet) {
-        if(planet!=null&&planet.length()!=0&&planet.length()<=50)  this.planet = planet;
-
+        this.planet = planet;
     }
 
     public ShipType getShipType() {
@@ -72,13 +75,7 @@ public class Ship {
     }
 
     public void setProdDate(Date prodDate) {
-        if(prodDate!=null){
-            Calendar calendar = new GregorianCalendar(2800, 0 , 1);
-            Date dateAfter = calendar.getTime();
-            calendar.set(3019,0,1);
-            Date dateBefore = calendar.getTime();
-            if(prodDate.getTime()>=dateAfter.getTime()&&prodDate.getTime()<=dateBefore.getTime())this.prodDate = prodDate;
-        }
+        this.prodDate = prodDate;
     }
 
     public Boolean getUsed() {
@@ -94,8 +91,7 @@ public class Ship {
     }
 
     public void setSpeed(Double speed) {
-        double roundSpeed = Math.round(speed*100)/100;
-        if(roundSpeed>=0.01&&roundSpeed<=0.99) this.speed = speed;
+        this.speed = speed;
     }
 
     public Integer getCrewSize() {
@@ -103,7 +99,7 @@ public class Ship {
     }
 
     public void setCrewSize(Integer crewSize) {
-        if(crewSize!=null&&crewSize>=1&&crewSize<=9999) this.crewSize = crewSize;
+        this.crewSize = crewSize;
     }
 
     public Double getRating() {
@@ -111,6 +107,19 @@ public class Ship {
     }
 
     public void setRating(Double rating) {
-        if(rating!=null) this.rating = (double)(Math.round(rating*100)/100);
+        this.rating = rating;
     }
+    //for tests
+    public Double rating(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(prodDate);
+        double v = speed;
+        double k;
+        if (isUsed) k=0.5d;
+        else k=1d;
+        long y = 3019;
+        long y2 = calendar.get(Calendar.YEAR);
+        return Math.round(((80 * v * k) / (y - y2 + 1)) * 100d) / 100d;
+    }
+
 }

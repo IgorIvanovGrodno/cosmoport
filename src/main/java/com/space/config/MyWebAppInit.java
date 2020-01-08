@@ -17,6 +17,8 @@ public class MyWebAppInit extends AbstractAnnotationConfigDispatcherServletIniti
         return new Class[] {WebConfig.class};
     }
 
+    //Определяем servlet-mapping веб контекст - в данном случае все что содержит / за распределение
+    // запросов между контроллерами отвечает AbstractAnnotationConfigDispatcherServletInitializer
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};

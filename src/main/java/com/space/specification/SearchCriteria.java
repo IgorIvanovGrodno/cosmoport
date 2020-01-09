@@ -1,4 +1,4 @@
-package com.space.service;
+package com.space.specification;
 
 public class SearchCriteria {
     private String key;

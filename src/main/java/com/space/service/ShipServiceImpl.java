@@ -4,6 +4,7 @@ import com.space.controller.ShipOrder;
 import com.space.model.Ship;
 import com.space.model.ShipType;
 import com.space.repository.ShipRepository;
+import com.space.specification.ShipSpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;

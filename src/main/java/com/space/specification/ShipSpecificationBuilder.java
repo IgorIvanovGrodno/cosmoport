@@ -1,4 +1,4 @@
-package com.space.service;
+package com.space.specification;
 
 import com.space.model.Ship;
 import org.springframework.data.jpa.domain.Specification;
